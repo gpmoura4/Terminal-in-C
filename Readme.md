@@ -1,1 +1,1 @@
-## Crei um terminal dentro de outro terminal
+## I created a terminal in a terminal
