@@ -52,8 +52,19 @@ void deletaLinha(char * progpath){
             progpath[i]='\0';
         }
     }
-
 }
+
+void roda_cd(char **comando)
+{
+  if (comando[1] == NULL) {
+    fprintf(stderr, "erro, digite novamete: \"cd\"\n");
+  } else {
+    if (chdir(comando[1]) != 0) {
+      perror("lsh");
+    }
+  }
+}
+
 
 int main(){
 
@@ -88,9 +99,14 @@ int main(){
 
         filho= fork();       //Processo filho
 
-        if(filho==0){           
-            execvp(progpath,comando);
-            fprintf(stderr, "ERROR\n");
+        if(filho==0){        
+            if(strcmp(comando[0], "cd") == 0)
+            {
+                roda_cd(comando);
+            }else{
+                execvp(progpath,comando);
+                fprintf(stderr, "ERROR\n");
+            }
 
         }else{                    //Mudando para o processo pai
             wait(-1);
